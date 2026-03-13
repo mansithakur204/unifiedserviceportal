@@ -8,15 +8,11 @@ import { ExternalLink, IndianRupee, Sprout, GraduationCap, Heart, Bookmark, Book
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { toast } from '@/hooks/use-toast';
+import { localizeScheme } from '@/lib/localize';
 
 interface SchemeCardProps {
   id: string;
-  schemeName: string;
-  details: string | null;
-  type: string;
-  category: string;
-  fundingAmount: string | null;
-  applicationLink: string | null;
+  scheme: any;
 }
 
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -31,10 +27,17 @@ const categoryColors: Record<string, string> = {
   Women: 'bg-primary text-primary-foreground',
 };
 
-export default function SchemeCard({ id, schemeName, details, type, category, fundingAmount, applicationLink }: SchemeCardProps) {
-  const { t, td } = useLanguage();
+export default function SchemeCard({ id, scheme }: SchemeCardProps) {
+  const { t, td, lang } = useLanguage();
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
+
+  const schemeName = localizeScheme(scheme, 'scheme_name', lang);
+  const details = localizeScheme(scheme, 'details', lang);
+  const fundingAmount = localizeScheme(scheme, 'funding_amount', lang);
+  const category = scheme.category;
+  const type = scheme.type;
+  const applicationLink = scheme.application_link;
 
   useEffect(() => {
     if (!user) return;

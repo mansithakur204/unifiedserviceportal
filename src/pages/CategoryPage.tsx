@@ -35,7 +35,7 @@ export default function CategoryPage() {
   const states = Array.from(new Set(schemes.map(s => s.state).filter(Boolean)));
 
   const filtered = schemes.filter(s => {
-    const matchSearch = s.scheme_name.toLowerCase().includes(search.toLowerCase()) || s.details?.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = s.scheme_name.toLowerCase().includes(search.toLowerCase()) || s.details?.toLowerCase().includes(search.toLowerCase()) || s.scheme_name_hi?.toLowerCase().includes(search.toLowerCase());
     const matchType = typeFilter === 'all' || s.type === typeFilter;
     const matchState = stateFilter === 'all' || s.state === stateFilter;
     return matchSearch && matchType && matchState;
@@ -80,7 +80,7 @@ export default function CategoryPage() {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.slice(0, visibleCount).map(s => (
-              <SchemeCard key={s.id} id={s.id} schemeName={s.scheme_name} details={s.details} type={s.type} category={s.category} fundingAmount={s.funding_amount} applicationLink={s.application_link} />
+              <SchemeCard key={s.id} id={s.id} scheme={s} />
             ))}
           </div>
           {visibleCount < filtered.length && (

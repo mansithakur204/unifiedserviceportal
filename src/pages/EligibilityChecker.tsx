@@ -17,7 +17,7 @@ const STATES = [
 ];
 
 export default function EligibilityChecker() {
-  const { t } = useLanguage();
+  const { t, td } = useLanguage();
   const [category, setCategory] = useState('');
   const [gender, setGender] = useState('');
   const [income, setIncome] = useState('');
@@ -38,13 +38,10 @@ export default function EligibilityChecker() {
     const { data } = await query.order('click_count', { ascending: false });
     let filtered = data ?? [];
 
-    // Gender-based filtering
     if (gender === 'Female') {
-      // Prioritize Women schemes but include others
       filtered.sort((a, b) => (b.category === 'Women' ? 1 : 0) - (a.category === 'Women' ? 1 : 0));
     }
 
-    // Occupation-based keyword matching
     if (occupation) {
       const occ = occupation.toLowerCase();
       filtered.sort((a, b) => {
@@ -62,72 +59,72 @@ export default function EligibilityChecker() {
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="flex items-center gap-2 mb-6">
         <ClipboardCheck className="w-7 h-7 text-primary" />
-        <h1 className="text-3xl font-bold">Eligibility Checker</h1>
+        <h1 className="text-3xl font-bold">{t('nav.eligibilityChecker')}</h1>
       </div>
 
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="text-lg">Enter Your Details</CardTitle>
+          <CardTitle className="text-lg">{t('eligibility.enterDetails')}</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Category</Label>
+            <Label>{t('scheme.category')}</Label>
             <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger><SelectValue placeholder="Select category" /></SelectTrigger>
+              <SelectTrigger><SelectValue placeholder={t('eligibility.selectCategory')} /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="Farmers">Farmers</SelectItem>
-                <SelectItem value="Students">Students</SelectItem>
-                <SelectItem value="Women">Women</SelectItem>
-                <SelectItem value="General">General</SelectItem>
+                <SelectItem value="Farmers">{t('category.farmers')}</SelectItem>
+                <SelectItem value="Students">{t('category.students')}</SelectItem>
+                <SelectItem value="Women">{t('category.women')}</SelectItem>
+                <SelectItem value="General">{t('category.general')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label>Gender</Label>
+            <Label>{t('eligibility.gender')}</Label>
             <Select value={gender} onValueChange={setGender}>
-              <SelectTrigger><SelectValue placeholder="Select gender" /></SelectTrigger>
+              <SelectTrigger><SelectValue placeholder={t('eligibility.selectGender')} /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="Male">Male</SelectItem>
-                <SelectItem value="Female">Female</SelectItem>
-                <SelectItem value="Other">Other</SelectItem>
+                <SelectItem value="Male">{t('eligibility.male')}</SelectItem>
+                <SelectItem value="Female">{t('eligibility.female')}</SelectItem>
+                <SelectItem value="Other">{t('eligibility.other')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label>Annual Income Range</Label>
+            <Label>{t('eligibility.income')}</Label>
             <Select value={income} onValueChange={setIncome}>
-              <SelectTrigger><SelectValue placeholder="Select income" /></SelectTrigger>
+              <SelectTrigger><SelectValue placeholder={t('eligibility.selectIncome')} /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="below-1l">Below ₹1,00,000</SelectItem>
+                <SelectItem value="below-1l">{t('eligibility.below1l')}</SelectItem>
                 <SelectItem value="1l-2.5l">₹1,00,000 - ₹2,50,000</SelectItem>
                 <SelectItem value="2.5l-5l">₹2,50,000 - ₹5,00,000</SelectItem>
                 <SelectItem value="5l-10l">₹5,00,000 - ₹10,00,000</SelectItem>
-                <SelectItem value="above-10l">Above ₹10,00,000</SelectItem>
+                <SelectItem value="above-10l">{t('eligibility.above10l')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label>State</Label>
+            <Label>{t('scheme.state')}</Label>
             <Select value={state} onValueChange={setState}>
-              <SelectTrigger><SelectValue placeholder="Select state" /></SelectTrigger>
+              <SelectTrigger><SelectValue placeholder={t('eligibility.selectState')} /></SelectTrigger>
               <SelectContent>
-                {STATES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                {STATES.map(s => <SelectItem key={s} value={s}>{td(s)}</SelectItem>)}
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2 sm:col-span-2">
-            <Label>Occupation</Label>
-            <Input placeholder="e.g. Farmer, Student, Self-employed" value={occupation} onChange={e => setOccupation(e.target.value)} />
+            <Label>{t('eligibility.occupation')}</Label>
+            <Input placeholder={t('eligibility.occupationPlaceholder')} value={occupation} onChange={e => setOccupation(e.target.value)} />
           </div>
 
           <div className="sm:col-span-2">
             <Button onClick={handleCheck} disabled={loading} className="w-full gap-2">
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-              Check Eligibility
+              {t('eligibility.checkButton')}
             </Button>
           </div>
         </CardContent>
@@ -136,11 +133,13 @@ export default function EligibilityChecker() {
       {searched && (
         <div>
           <h2 className="text-xl font-semibold mb-4">
-            {results.length > 0 ? `${results.length} Eligible Scheme(s) Found` : 'No matching schemes found'}
+            {results.length > 0
+              ? `${results.length} ${t('eligibility.schemesFound')}`
+              : t('search.noResults')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {results.map(s => (
-              <SchemeCard key={s.id} id={s.id} schemeName={s.scheme_name} details={s.details} type={s.type} category={s.category} fundingAmount={s.funding_amount} applicationLink={s.application_link} />
+              <SchemeCard key={s.id} id={s.id} scheme={s} />
             ))}
           </div>
         </div>

@@ -74,20 +74,27 @@ export type Database = {
         Row: {
           application_link: string | null
           benefits: string | null
+          benefits_hi: string | null
           category: string
           click_count: number
           created_at: string
           created_by: string | null
           details: string | null
+          details_hi: string | null
           documents: string | null
+          documents_hi: string | null
           eligibility: string | null
+          eligibility_hi: string | null
           faq: Json | null
           funding_amount: string | null
+          funding_amount_hi: string | null
           helpline: string | null
+          helpline_hi: string | null
           icon: string | null
           id: string
           is_popular: boolean | null
           scheme_name: string
+          scheme_name_hi: string | null
           state: string | null
           type: string
           updated_at: string
@@ -95,20 +102,27 @@ export type Database = {
         Insert: {
           application_link?: string | null
           benefits?: string | null
+          benefits_hi?: string | null
           category: string
           click_count?: number
           created_at?: string
           created_by?: string | null
           details?: string | null
+          details_hi?: string | null
           documents?: string | null
+          documents_hi?: string | null
           eligibility?: string | null
+          eligibility_hi?: string | null
           faq?: Json | null
           funding_amount?: string | null
+          funding_amount_hi?: string | null
           helpline?: string | null
+          helpline_hi?: string | null
           icon?: string | null
           id?: string
           is_popular?: boolean | null
           scheme_name: string
+          scheme_name_hi?: string | null
           state?: string | null
           type: string
           updated_at?: string
@@ -116,20 +130,27 @@ export type Database = {
         Update: {
           application_link?: string | null
           benefits?: string | null
+          benefits_hi?: string | null
           category?: string
           click_count?: number
           created_at?: string
           created_by?: string | null
           details?: string | null
+          details_hi?: string | null
           documents?: string | null
+          documents_hi?: string | null
           eligibility?: string | null
+          eligibility_hi?: string | null
           faq?: Json | null
           funding_amount?: string | null
+          funding_amount_hi?: string | null
           helpline?: string | null
+          helpline_hi?: string | null
           icon?: string | null
           id?: string
           is_popular?: boolean | null
           scheme_name?: string
+          scheme_name_hi?: string | null
           state?: string | null
           type?: string
           updated_at?: string
