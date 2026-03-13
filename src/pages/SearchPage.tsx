@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 const PAGE_SIZE = 12;
 
 export default function SearchPage() {
-  const { t } = useLanguage();
+  const { t, td } = useLanguage();
   const [schemes, setSchemes] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -50,7 +50,7 @@ export default function SearchPage() {
         <Select value={categoryFilter} onValueChange={v => { setCategoryFilter(v); setVisibleCount(PAGE_SIZE); }}>
           <SelectTrigger className="w-[140px]"><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
+            <SelectItem value="all">{t('search.allCategories')}</SelectItem>
             <SelectItem value="Farmers">{t('category.farmers')}</SelectItem>
             <SelectItem value="Students">{t('category.students')}</SelectItem>
             <SelectItem value="Women">{t('category.women')}</SelectItem>
@@ -60,17 +60,17 @@ export default function SearchPage() {
         <Select value={typeFilter} onValueChange={v => { setTypeFilter(v); setVisibleCount(PAGE_SIZE); }}>
           <SelectTrigger className="w-[120px]"><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
+            <SelectItem value="all">{t('search.allTypes')}</SelectItem>
             <SelectItem value="Central">{t('scheme.central')}</SelectItem>
             <SelectItem value="State">{t('scheme.state')}</SelectItem>
           </SelectContent>
         </Select>
         {states.length > 1 && (
           <Select value={stateFilter} onValueChange={v => { setStateFilter(v); setVisibleCount(PAGE_SIZE); }}>
-            <SelectTrigger className="w-[160px]"><SelectValue placeholder="State" /></SelectTrigger>
+            <SelectTrigger className="w-[160px]"><SelectValue placeholder={t('scheme.state')} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All States</SelectItem>
-              {states.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              <SelectItem value="all">{t('search.allStates')}</SelectItem>
+              {states.map(s => <SelectItem key={s} value={s}>{td(s)}</SelectItem>)}
             </SelectContent>
           </Select>
         )}
@@ -82,7 +82,7 @@ export default function SearchPage() {
         <p className="text-center text-muted-foreground py-8">{t('search.noResults')}</p>
       ) : (
         <>
-          <p className="text-sm text-muted-foreground mb-4">{filtered.length} scheme(s) found</p>
+          <p className="text-sm text-muted-foreground mb-4">{filtered.length} {t('search.schemesFound')}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filtered.slice(0, visibleCount).map(s => (
               <SchemeCard key={s.id} id={s.id} schemeName={s.scheme_name} details={s.details} type={s.type} category={s.category} fundingAmount={s.funding_amount} applicationLink={s.application_link} />
@@ -91,7 +91,7 @@ export default function SearchPage() {
           {visibleCount < filtered.length && (
             <div className="text-center mt-8">
               <Button variant="outline" onClick={() => setVisibleCount(c => c + PAGE_SIZE)} className="gap-2">
-                <Loader2 className="w-4 h-4" /> Load More ({filtered.length - visibleCount} remaining)
+                <Loader2 className="w-4 h-4" /> {t('search.loadMore')} ({filtered.length - visibleCount} {t('search.remaining')})
               </Button>
             </div>
           )}
