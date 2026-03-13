@@ -148,7 +148,7 @@ export default function Landing() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {latestSchemes.map(s => (
-              <SchemeCard key={s.id} id={s.id} schemeName={s.scheme_name} details={s.details} type={s.type} category={s.category} fundingAmount={s.funding_amount} applicationLink={s.application_link} />
+              <SchemeCard key={s.id} id={s.id} scheme={s} />
             ))}
           </div>
         </section>
@@ -163,7 +163,7 @@ export default function Landing() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {popularSchemes.map(s => (
-              <SchemeCard key={s.id} id={s.id} schemeName={s.scheme_name} details={s.details} type={s.type} category={s.category} fundingAmount={s.funding_amount} applicationLink={s.application_link} />
+              <SchemeCard key={s.id} id={s.id} scheme={s} />
             ))}
           </div>
         </section>

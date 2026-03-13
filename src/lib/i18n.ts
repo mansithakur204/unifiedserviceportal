@@ -83,6 +83,24 @@ const translations: Record<string, Record<Language, string>> = {
   'admin.editScheme': { en: 'Edit Scheme', hi: 'योजना संपादित करें' },
   'admin.totalSchemes': { en: 'Total Schemes', hi: 'कुल योजनाएं' },
 
+  // Eligibility Checker
+  'eligibility.enterDetails': { en: 'Enter Your Details', hi: 'अपना विवरण दर्ज करें' },
+  'eligibility.selectCategory': { en: 'Select category', hi: 'श्रेणी चुनें' },
+  'eligibility.gender': { en: 'Gender', hi: 'लिंग' },
+  'eligibility.selectGender': { en: 'Select gender', hi: 'लिंग चुनें' },
+  'eligibility.male': { en: 'Male', hi: 'पुरुष' },
+  'eligibility.female': { en: 'Female', hi: 'महिला' },
+  'eligibility.other': { en: 'Other', hi: 'अन्य' },
+  'eligibility.income': { en: 'Annual Income Range', hi: 'वार्षिक आय सीमा' },
+  'eligibility.selectIncome': { en: 'Select income', hi: 'आय चुनें' },
+  'eligibility.below1l': { en: 'Below ₹1,00,000', hi: '₹1,00,000 से कम' },
+  'eligibility.above10l': { en: 'Above ₹10,00,000', hi: '₹10,00,000 से अधिक' },
+  'eligibility.selectState': { en: 'Select state', hi: 'राज्य चुनें' },
+  'eligibility.occupation': { en: 'Occupation', hi: 'व्यवसाय' },
+  'eligibility.occupationPlaceholder': { en: 'e.g. Farmer, Student, Self-employed', hi: 'जैसे किसान, छात्र, स्वरोजगार' },
+  'eligibility.checkButton': { en: 'Check Eligibility', hi: 'पात्रता जाँचें' },
+  'eligibility.schemesFound': { en: 'Eligible Scheme(s) Found', hi: 'पात्र योजना(एं) मिलीं' },
+
   // Common
   'common.loading': { en: 'Loading...', hi: 'लोड हो रहा है...' },
   'common.save': { en: 'Save', hi: 'सहेजें' },
