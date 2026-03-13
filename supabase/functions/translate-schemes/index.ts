@@ -14,6 +14,9 @@ serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+    
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Get schemes without Hindi translations
@@ -21,7 +24,7 @@ serve(async (req) => {
       .from("schemes")
       .select("id, scheme_name, details, eligibility, benefits, documents, helpline, funding_amount")
       .is("scheme_name_hi", null)
-      .limit(20);
+      .limit(10);
 
     if (error) throw error;
     if (!schemes || schemes.length === 0) {
@@ -42,13 +45,13 @@ serve(async (req) => {
       if (scheme.helpline) fieldsToTranslate.helpline = scheme.helpline;
       if (scheme.funding_amount) fieldsToTranslate.funding_amount = scheme.funding_amount;
 
-      const prompt = `Translate the following JSON values from English to Hindi. Keep the JSON keys exactly the same. Return ONLY valid JSON, no extra text. Context: These are Indian government scheme details.\n\n${JSON.stringify(fieldsToTranslate)}`;
+      const prompt = `Translate the following JSON values from English to Hindi. Keep the JSON keys exactly the same. Return ONLY valid JSON, no markdown, no extra text. Context: These are Indian government scheme details for rural citizens.\n\n${JSON.stringify(fieldsToTranslate)}`;
 
-      const aiResponse = await fetch(`${supabaseUrl}/functions/v1/ai-proxy`, {
+      const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${supabaseKey}`,
         },
         body: JSON.stringify({
           model: "google/gemini-2.5-flash",
@@ -57,7 +60,7 @@ serve(async (req) => {
       });
 
       if (!aiResponse.ok) {
-        console.error(`AI proxy failed for scheme ${scheme.id}:`, await aiResponse.text());
+        console.error(`AI failed for scheme ${scheme.id}:`, await aiResponse.text());
         continue;
       }
 
