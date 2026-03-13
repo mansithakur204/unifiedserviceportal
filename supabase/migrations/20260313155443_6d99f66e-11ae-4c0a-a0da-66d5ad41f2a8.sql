@@ -1,0 +1,9 @@
+
+ALTER TABLE public.schemes
+  ADD COLUMN IF NOT EXISTS scheme_name_hi TEXT,
+  ADD COLUMN IF NOT EXISTS details_hi TEXT,
+  ADD COLUMN IF NOT EXISTS eligibility_hi TEXT,
+  ADD COLUMN IF NOT EXISTS benefits_hi TEXT,
+  ADD COLUMN IF NOT EXISTS documents_hi TEXT,
+  ADD COLUMN IF NOT EXISTS helpline_hi TEXT,
+  ADD COLUMN IF NOT EXISTS funding_amount_hi TEXT;
