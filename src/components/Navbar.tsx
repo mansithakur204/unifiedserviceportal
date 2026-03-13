@@ -33,14 +33,14 @@ export default function Navbar() {
             {t('nav.search')}
           </Link>
           <Link to="/eligibility" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
-            <ClipboardCheck className="w-4 h-4" /> Eligibility
+            <ClipboardCheck className="w-4 h-4" /> {t('nav.eligibility')}
           </Link>
           <Link to="/compare" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
-            <GitCompareArrows className="w-4 h-4" /> Compare
+            <GitCompareArrows className="w-4 h-4" /> {t('nav.compare')}
           </Link>
           {user && (
             <Link to="/saved" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
-              <Bookmark className="w-4 h-4" /> Saved
+              <Bookmark className="w-4 h-4" /> {t('nav.saved')}
             </Link>
           )}
           {isAdmin && (
@@ -80,9 +80,9 @@ export default function Navbar() {
         <div className="md:hidden border-t bg-card px-4 py-4 space-y-3">
           <Link to="/home" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.home')}</Link>
           <Link to="/search" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.search')}</Link>
-          <Link to="/eligibility" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>Eligibility Checker</Link>
-          <Link to="/compare" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>Compare Schemes</Link>
-          {user && <Link to="/saved" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>Saved Schemes</Link>}
+          <Link to="/eligibility" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.eligibilityChecker')}</Link>
+          <Link to="/compare" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.compareSchemes')}</Link>
+          {user && <Link to="/saved" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.savedSchemes')}</Link>}
           {isAdmin && (
             <Link to="/admin" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.admin')}</Link>
           )}

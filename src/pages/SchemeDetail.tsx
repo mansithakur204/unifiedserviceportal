@@ -12,7 +12,7 @@ import { toast } from '@/hooks/use-toast';
 
 export default function SchemeDetail() {
   const { id } = useParams<{ id: string }>();
-  const { t } = useLanguage();
+  const { t, td } = useLanguage();
   const { user } = useAuth();
   const [scheme, setScheme] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -23,9 +23,7 @@ export default function SchemeDetail() {
       setScheme(data);
       setLoading(false);
     });
-    // Track click
     supabase.rpc('increment_click_count', { scheme_id: id! });
-    // Check bookmark
     if (user) {
       supabase.from('bookmarks').select('id').eq('user_id', user.id).eq('scheme_id', id!).maybeSingle()
         .then(({ data }) => setBookmarked(!!data));
@@ -33,7 +31,7 @@ export default function SchemeDetail() {
   }, [id, user]);
 
   if (loading) return <div className="container mx-auto px-4 py-16 text-center text-muted-foreground">{t('common.loading')}</div>;
-  if (!scheme) return <div className="container mx-auto px-4 py-16 text-center">Scheme not found</div>;
+  if (!scheme) return <div className="container mx-auto px-4 py-16 text-center">{t('scheme.notFound')}</div>;
 
   const faqItems: { question: string; answer: string }[] = Array.isArray(scheme.faq) ? scheme.faq : [];
 
@@ -46,9 +44,9 @@ export default function SchemeDetail() {
       <Card>
         <CardContent className="p-6 md:p-8 space-y-6">
           <div className="flex flex-wrap gap-2">
-            <Badge className="bg-primary text-primary-foreground">{scheme.category}</Badge>
-            <Badge variant="outline">{scheme.type}</Badge>
-            {scheme.state && scheme.state !== 'All India' && <Badge variant="secondary">{scheme.state}</Badge>}
+            <Badge className="bg-primary text-primary-foreground">{td(scheme.category)}</Badge>
+            <Badge variant="outline">{td(scheme.type)}</Badge>
+            {scheme.state && scheme.state !== 'All India' && <Badge variant="secondary">{td(scheme.state)}</Badge>}
           </div>
 
           <h1 className="text-2xl md:text-3xl font-bold">{scheme.scheme_name}</h1>
@@ -58,20 +56,20 @@ export default function SchemeDetail() {
             size="sm"
             className="gap-2 w-fit"
             onClick={async () => {
-              if (!user) { toast({ title: 'Please login to save schemes', variant: 'destructive' }); return; }
+              if (!user) { toast({ title: t('scheme.loginToSave'), variant: 'destructive' }); return; }
               if (bookmarked) {
                 await supabase.from('bookmarks').delete().eq('user_id', user.id).eq('scheme_id', id!);
                 setBookmarked(false);
-                toast({ title: 'Removed from saved' });
+                toast({ title: t('scheme.removedFromSaved') });
               } else {
                 await supabase.from('bookmarks').insert({ user_id: user.id, scheme_id: id! });
                 setBookmarked(true);
-                toast({ title: 'Scheme saved!' });
+                toast({ title: t('scheme.schemeSaved') });
               }
             }}
           >
             {bookmarked ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
-            {bookmarked ? 'Saved' : 'Save Scheme'}
+            {bookmarked ? t('scheme.saved') : t('scheme.save')}
           </Button>
 
           {scheme.funding_amount && (
@@ -98,7 +96,7 @@ export default function SchemeDetail() {
           {scheme.benefits && (
             <div>
               <h3 className="font-semibold mb-2 flex items-center gap-1">
-                <Gift className="w-4 h-4 text-primary" /> Benefits
+                <Gift className="w-4 h-4 text-primary" /> {t('scheme.benefits')}
               </h3>
               <p className="text-muted-foreground whitespace-pre-wrap">{scheme.benefits}</p>
             </div>
@@ -107,7 +105,7 @@ export default function SchemeDetail() {
           {scheme.documents && (
             <div>
               <h3 className="font-semibold mb-2 flex items-center gap-1">
-                <FileText className="w-4 h-4 text-accent" /> Required Documents
+                <FileText className="w-4 h-4 text-accent" /> {t('scheme.documents')}
               </h3>
               <p className="text-muted-foreground whitespace-pre-wrap">{scheme.documents}</p>
             </div>
@@ -116,7 +114,7 @@ export default function SchemeDetail() {
           {scheme.helpline && (
             <div>
               <h3 className="font-semibold mb-2 flex items-center gap-1">
-                <Phone className="w-4 h-4 text-secondary" /> Helpline
+                <Phone className="w-4 h-4 text-secondary" /> {t('scheme.helpline')}
               </h3>
               <p className="text-muted-foreground">{scheme.helpline}</p>
             </div>
@@ -125,7 +123,7 @@ export default function SchemeDetail() {
           {faqItems.length > 0 && (
             <div>
               <h3 className="font-semibold mb-3 flex items-center gap-1">
-                <HelpCircle className="w-4 h-4 text-primary" /> Frequently Asked Questions
+                <HelpCircle className="w-4 h-4 text-primary" /> {t('scheme.faq')}
               </h3>
               <Accordion type="single" collapsible className="w-full">
                 {faqItems.map((faq, i) => (

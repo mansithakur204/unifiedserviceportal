@@ -13,7 +13,7 @@ const PAGE_SIZE = 12;
 
 export default function CategoryPage() {
   const { category } = useParams<{ category: string }>();
-  const { t } = useLanguage();
+  const { t, td } = useLanguage();
   const [schemes, setSchemes] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
@@ -41,7 +41,7 @@ export default function CategoryPage() {
     return matchSearch && matchType && matchState;
   });
 
-  const categoryTitle = t(`category.${category?.toLowerCase()}` as any) || category;
+  const categoryTitle = td(category) || category;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -63,10 +63,10 @@ export default function CategoryPage() {
         </Select>
         {states.length > 1 && (
           <Select value={stateFilter} onValueChange={setStateFilter}>
-            <SelectTrigger className="w-[160px]"><SelectValue placeholder="State" /></SelectTrigger>
+            <SelectTrigger className="w-[160px]"><SelectValue placeholder={t('scheme.state')} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All States</SelectItem>
-              {states.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              <SelectItem value="all">{t('search.allStates')}</SelectItem>
+              {states.map(s => <SelectItem key={s} value={s}>{td(s)}</SelectItem>)}
             </SelectContent>
           </Select>
         )}
@@ -86,7 +86,7 @@ export default function CategoryPage() {
           {visibleCount < filtered.length && (
             <div className="text-center mt-8">
               <Button variant="outline" onClick={() => setVisibleCount(c => c + PAGE_SIZE)} className="gap-2">
-                <Loader2 className="w-4 h-4" /> Load More ({filtered.length - visibleCount} remaining)
+                <Loader2 className="w-4 h-4" /> {t('search.loadMore')} ({filtered.length - visibleCount} {t('search.remaining')})
               </Button>
             </div>
           )}

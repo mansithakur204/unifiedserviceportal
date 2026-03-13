@@ -32,7 +32,7 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function SchemeCard({ id, schemeName, details, type, category, fundingAmount, applicationLink }: SchemeCardProps) {
-  const { t } = useLanguage();
+  const { t, td } = useLanguage();
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
 
@@ -46,17 +46,17 @@ export default function SchemeCard({ id, schemeName, details, type, category, fu
     e.preventDefault();
     e.stopPropagation();
     if (!user) {
-      toast({ title: 'Please login to save schemes', variant: 'destructive' });
+      toast({ title: t('scheme.loginToSave'), variant: 'destructive' });
       return;
     }
     if (bookmarked) {
       await supabase.from('bookmarks').delete().eq('user_id', user.id).eq('scheme_id', id);
       setBookmarked(false);
-      toast({ title: 'Scheme removed from saved' });
+      toast({ title: t('scheme.removedFromSaved') });
     } else {
       await supabase.from('bookmarks').insert({ user_id: user.id, scheme_id: id });
       setBookmarked(true);
-      toast({ title: 'Scheme saved!' });
+      toast({ title: t('scheme.schemeSaved') });
     }
   };
 
@@ -70,10 +70,10 @@ export default function SchemeCard({ id, schemeName, details, type, category, fu
         <div className="flex items-center justify-between gap-2">
           <Badge className={categoryColors[category] ?? 'bg-muted text-muted-foreground'}>
             <span className="mr-1">{categoryIcons[category]}</span>
-            {category}
+            {td(category)}
           </Badge>
           <div className="flex items-center gap-1">
-            <Badge variant="outline">{type}</Badge>
+            <Badge variant="outline">{td(type)}</Badge>
             <button onClick={toggleBookmark} className="p-1 rounded hover:bg-muted transition-colors">
               {bookmarked ? <BookmarkCheck className="w-4 h-4 text-primary" /> : <Bookmark className="w-4 h-4 text-muted-foreground" />}
             </button>

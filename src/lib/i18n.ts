@@ -10,6 +10,12 @@ const translations: Record<string, Record<Language, string>> = {
   'nav.login': { en: 'Login', hi: 'लॉगिन' },
   'nav.register': { en: 'Register', hi: 'पंजीकरण' },
   'nav.logout': { en: 'Logout', hi: 'लॉगआउट' },
+  'nav.eligibility': { en: 'Eligibility', hi: 'पात्रता जाँच' },
+  'nav.compare': { en: 'Compare', hi: 'तुलना करें' },
+  'nav.saved': { en: 'Saved', hi: 'सहेजे गए' },
+  'nav.eligibilityChecker': { en: 'Eligibility Checker', hi: 'पात्रता जाँचकर्ता' },
+  'nav.compareSchemes': { en: 'Compare Schemes', hi: 'योजनाओं की तुलना' },
+  'nav.savedSchemes': { en: 'Saved Schemes', hi: 'सहेजी गई योजनाएं' },
 
   // Landing
   'landing.title': { en: 'Rural Services Portal', hi: 'ग्रामीण सेवा पोर्टल' },
@@ -27,7 +33,7 @@ const translations: Record<string, Record<Language, string>> = {
   'category.women.desc': { en: 'Women welfare, empowerment & safety', hi: 'महिला कल्याण, सशक्तिकरण और सुरक्षा' },
   'category.general.desc': { en: 'General welfare & development schemes', hi: 'सामान्य कल्याण और विकास योजनाएं' },
 
-  // Scheme
+  // Scheme labels
   'scheme.apply': { en: 'Apply Now', hi: 'अभी आवेदन करें' },
   'scheme.eligibility': { en: 'Eligibility', hi: 'पात्रता' },
   'scheme.funding': { en: 'Funding', hi: 'वित्तपोषण' },
@@ -35,12 +41,30 @@ const translations: Record<string, Record<Language, string>> = {
   'scheme.central': { en: 'Central', hi: 'केंद्रीय' },
   'scheme.state': { en: 'State', hi: 'राज्य' },
   'scheme.details': { en: 'Details', hi: 'विवरण' },
+  'scheme.benefits': { en: 'Benefits', hi: 'लाभ' },
+  'scheme.documents': { en: 'Required Documents', hi: 'आवश्यक दस्तावेज़' },
+  'scheme.helpline': { en: 'Helpline', hi: 'हेल्पलाइन' },
+  'scheme.popular': { en: 'Popular', hi: 'लोकप्रिय' },
+  'scheme.faq': { en: 'Frequently Asked Questions', hi: 'अक्सर पूछे जाने वाले प्रश्न' },
+  'scheme.category': { en: 'Category', hi: 'श्रेणी' },
+  'scheme.save': { en: 'Save Scheme', hi: 'योजना सहेजें' },
+  'scheme.saved': { en: 'Saved', hi: 'सहेजा गया' },
+  'scheme.removedFromSaved': { en: 'Removed from saved', hi: 'सहेजे गए से हटाया गया' },
+  'scheme.schemeSaved': { en: 'Scheme saved!', hi: 'योजना सहेजी गई!' },
+  'scheme.loginToSave': { en: 'Please login to save schemes', hi: 'योजनाएं सहेजने के लिए लॉगिन करें' },
+  'scheme.notFound': { en: 'Scheme not found', hi: 'योजना नहीं मिली' },
 
   // Search
   'search.placeholder': { en: 'Search schemes...', hi: 'योजनाएं खोजें...' },
   'search.voice': { en: 'Voice Search', hi: 'वॉइस खोज' },
   'search.filter': { en: 'Filter', hi: 'फ़िल्टर' },
   'search.noResults': { en: 'No schemes found', hi: 'कोई योजना नहीं मिली' },
+  'search.allCategories': { en: 'All Categories', hi: 'सभी श्रेणियाँ' },
+  'search.allTypes': { en: 'All Types', hi: 'सभी प्रकार' },
+  'search.allStates': { en: 'All States', hi: 'सभी राज्य' },
+  'search.schemesFound': { en: 'scheme(s) found', hi: 'योजना(एं) मिलीं' },
+  'search.loadMore': { en: 'Load More', hi: 'और लोड करें' },
+  'search.remaining': { en: 'remaining', hi: 'शेष' },
 
   // Auth
   'auth.email': { en: 'Email', hi: 'ईमेल' },
@@ -76,6 +100,65 @@ const translations: Record<string, Record<Language, string>> = {
   'carousel.womenSubtitle': { en: 'Safety, welfare & financial independence schemes', hi: 'सुरक्षा, कल्याण और वित्तीय स्वतंत्रता योजनाएं' },
 };
 
+// Dynamic value translation map — translates DB values to Hindi
+const dynamicTranslations: Record<string, Record<Language, string>> = {
+  // Categories
+  'Farmers': { en: 'Farmers', hi: 'किसान' },
+  'Students': { en: 'Students', hi: 'छात्र' },
+  'Women': { en: 'Women', hi: 'महिलाएं' },
+  'General': { en: 'General', hi: 'सामान्य' },
+
+  // Types
+  'Central': { en: 'Central', hi: 'केंद्रीय' },
+  'State': { en: 'State', hi: 'राज्य' },
+
+  // Indian states
+  'All India': { en: 'All India', hi: 'संपूर्ण भारत' },
+  'Andhra Pradesh': { en: 'Andhra Pradesh', hi: 'आंध्र प्रदेश' },
+  'Arunachal Pradesh': { en: 'Arunachal Pradesh', hi: 'अरुणाचल प्रदेश' },
+  'Assam': { en: 'Assam', hi: 'असम' },
+  'Bihar': { en: 'Bihar', hi: 'बिहार' },
+  'Chhattisgarh': { en: 'Chhattisgarh', hi: 'छत्तीसगढ़' },
+  'Goa': { en: 'Goa', hi: 'गोवा' },
+  'Gujarat': { en: 'Gujarat', hi: 'गुजरात' },
+  'Haryana': { en: 'Haryana', hi: 'हरियाणा' },
+  'Himachal Pradesh': { en: 'Himachal Pradesh', hi: 'हिमाचल प्रदेश' },
+  'Jharkhand': { en: 'Jharkhand', hi: 'झारखंड' },
+  'Karnataka': { en: 'Karnataka', hi: 'कर्नाटक' },
+  'Kerala': { en: 'Kerala', hi: 'केरल' },
+  'Madhya Pradesh': { en: 'Madhya Pradesh', hi: 'मध्य प्रदेश' },
+  'Maharashtra': { en: 'Maharashtra', hi: 'महाराष्ट्र' },
+  'Manipur': { en: 'Manipur', hi: 'मणिपुर' },
+  'Meghalaya': { en: 'Meghalaya', hi: 'मेघालय' },
+  'Mizoram': { en: 'Mizoram', hi: 'मिज़ोरम' },
+  'Nagaland': { en: 'Nagaland', hi: 'नागालैंड' },
+  'Odisha': { en: 'Odisha', hi: 'ओडिशा' },
+  'Punjab': { en: 'Punjab', hi: 'पंजाब' },
+  'Rajasthan': { en: 'Rajasthan', hi: 'राजस्थान' },
+  'Sikkim': { en: 'Sikkim', hi: 'सिक्किम' },
+  'Tamil Nadu': { en: 'Tamil Nadu', hi: 'तमिलनाडु' },
+  'Telangana': { en: 'Telangana', hi: 'तेलंगाना' },
+  'Tripura': { en: 'Tripura', hi: 'त्रिपुरा' },
+  'Uttar Pradesh': { en: 'Uttar Pradesh', hi: 'उत्तर प्रदेश' },
+  'Uttarakhand': { en: 'Uttarakhand', hi: 'उत्तराखंड' },
+  'West Bengal': { en: 'West Bengal', hi: 'पश्चिम बंगाल' },
+  'Delhi': { en: 'Delhi', hi: 'दिल्ली' },
+  'Jammu and Kashmir': { en: 'Jammu and Kashmir', hi: 'जम्मू और कश्मीर' },
+  'Ladakh': { en: 'Ladakh', hi: 'लद्दाख' },
+  'Puducherry': { en: 'Puducherry', hi: 'पुदुचेरी' },
+  'Chandigarh': { en: 'Chandigarh', hi: 'चंडीगढ़' },
+
+  // Common labels used in data
+  'Yes': { en: 'Yes', hi: 'हाँ' },
+  'No': { en: 'No', hi: 'नहीं' },
+};
+
 export function t(key: string, lang: Language): string {
   return translations[key]?.[lang] ?? key;
+}
+
+/** Translate a dynamic database value (category, type, state, etc.) */
+export function td(value: string | null | undefined, lang: Language): string {
+  if (!value) return '';
+  return dynamicTranslations[value]?.[lang] ?? value;
 }
