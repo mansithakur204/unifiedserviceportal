@@ -6,6 +6,10 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -24,7 +28,7 @@ serve(async (req) => {
       .from("schemes")
       .select("id, scheme_name, details, eligibility, benefits, documents, helpline, funding_amount")
       .is("scheme_name_hi", null)
-      .limit(10);
+      .limit(5);
 
     if (error) throw error;
     if (!schemes || schemes.length === 0) {
@@ -47,6 +51,11 @@ serve(async (req) => {
 
       const prompt = `Translate the following JSON values from English to Hindi. Keep the JSON keys exactly the same. Return ONLY valid JSON, no markdown, no extra text. Context: These are Indian government scheme details for rural citizens.\n\n${JSON.stringify(fieldsToTranslate)}`;
 
+      // Add delay between requests to avoid rate limiting
+      if (translatedCount > 0) {
+        await delay(2000);
+      }
+
       const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -54,13 +63,18 @@ serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-2.5-flash",
+          model: "google/gemini-2.5-flash-lite",
           messages: [{ role: "user", content: prompt }],
         }),
       });
 
       if (!aiResponse.ok) {
-        console.error(`AI failed for scheme ${scheme.id}:`, await aiResponse.text());
+        const errText = await aiResponse.text();
+        console.error(`AI failed for scheme ${scheme.id}:`, errText);
+        if (aiResponse.status === 429) {
+          // Stop on rate limit, return what we have
+          break;
+        }
         continue;
       }
 
@@ -89,8 +103,13 @@ serve(async (req) => {
       }
     }
 
+    const { count: remaining } = await supabase
+      .from("schemes")
+      .select("id", { count: "exact", head: true })
+      .is("scheme_name_hi", null);
+
     return new Response(
-      JSON.stringify({ message: `Translated ${translatedCount} schemes`, count: translatedCount, total: schemes.length }),
+      JSON.stringify({ message: `Translated ${translatedCount} schemes`, count: translatedCount, remaining: remaining ?? 0 }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
