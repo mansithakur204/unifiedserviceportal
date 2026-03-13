@@ -28,7 +28,9 @@ export default function Home() {
 
   const filtered = schemes.filter(s =>
     s.scheme_name.toLowerCase().includes(search.toLowerCase()) ||
-    s.details?.toLowerCase().includes(search.toLowerCase())
+    s.details?.toLowerCase().includes(search.toLowerCase()) ||
+    s.scheme_name_hi?.toLowerCase().includes(search.toLowerCase()) ||
+    s.details_hi?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -58,22 +60,13 @@ export default function Home() {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filtered.slice(0, visibleCount).map(s => (
-                <SchemeCard
-                  key={s.id}
-                  id={s.id}
-                  schemeName={s.scheme_name}
-                  details={s.details}
-                  type={s.type}
-                  category={s.category}
-                  fundingAmount={s.funding_amount}
-                  applicationLink={s.application_link}
-                />
+                <SchemeCard key={s.id} id={s.id} scheme={s} />
               ))}
             </div>
             {visibleCount < filtered.length && (
               <div className="text-center mt-8">
                 <Button variant="outline" onClick={() => setVisibleCount(c => c + PAGE_SIZE)} className="gap-2">
-                  <Loader2 className="w-4 h-4" /> Load More ({filtered.length - visibleCount} remaining)
+                  <Loader2 className="w-4 h-4" /> {t('search.loadMore')} ({filtered.length - visibleCount} {t('search.remaining')})
                 </Button>
               </div>
             )}
