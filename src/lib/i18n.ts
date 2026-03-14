@@ -116,6 +116,20 @@ const translations: Record<string, Record<Language, string>> = {
   'carousel.studentSubtitle': { en: 'Scholarships, skill development & education support', hi: 'छात्रवृत्ति, कौशल विकास और शिक्षा सहायता' },
   'carousel.womenTitle': { en: 'Women Empowerment', hi: 'महिला सशक्तिकरण' },
   'carousel.womenSubtitle': { en: 'Safety, welfare & financial independence schemes', hi: 'सुरक्षा, कल्याण और वित्तीय स्वतंत्रता योजनाएं' },
+
+  // Footer
+  'footer.portal': { en: 'Portal', hi: 'पोर्टल' },
+  'footer.home': { en: 'Home', hi: 'होम' },
+  'footer.searchSchemes': { en: 'Search Schemes', hi: 'योजनाएँ खोजें' },
+  'footer.allSchemes': { en: 'All Schemes', hi: 'सभी योजनाएँ' },
+  'footer.categories': { en: 'Categories', hi: 'श्रेणियाँ' },
+  'footer.information': { en: 'Information', hi: 'जानकारी' },
+  'footer.about': { en: 'About', hi: 'हमारे बारे में' },
+  'footer.contact': { en: 'Contact', hi: 'संपर्क' },
+  'footer.disclaimer': { en: 'Disclaimer', hi: 'अस्वीकरण' },
+  'footer.privacyPolicy': { en: 'Privacy Policy', hi: 'गोपनीयता नीति' },
+  'footer.dataSources': { en: 'Data Sources', hi: 'डेटा स्रोत' },
+  'footer.copyright': { en: 'For informational purposes only.', hi: 'केवल जानकारी के उद्देश्य से।' },
 };
 
 // Dynamic value translation map — translates DB values to Hindi
