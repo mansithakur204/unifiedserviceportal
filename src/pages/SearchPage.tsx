@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSchemes } from '@/hooks/useSchemes';
 import SchemeCard from '@/components/SchemeCard';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -12,20 +12,12 @@ const PAGE_SIZE = 12;
 
 export default function SearchPage() {
   const { t, td } = useLanguage();
-  const [schemes, setSchemes] = useState<any[]>([]);
+  const { schemes, loading } = useSchemes();
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [stateFilter, setStateFilter] = useState('all');
-  const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-
-  useEffect(() => {
-    supabase.from('schemes').select('*').order('created_at', { ascending: false }).then(({ data }) => {
-      setSchemes(data ?? []);
-      setLoading(false);
-    });
-  }, []);
 
   const states = Array.from(new Set(schemes.map(s => s.state).filter(Boolean)));
 

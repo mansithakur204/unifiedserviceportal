@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSchemes } from '@/hooks/useSchemes';
 import SchemeCard from '@/components/SchemeCard';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -14,23 +14,11 @@ const PAGE_SIZE = 12;
 export default function CategoryPage() {
   const { category } = useParams<{ category: string }>();
   const { t, td } = useLanguage();
-  const [schemes, setSchemes] = useState<any[]>([]);
+  const { schemes, loading } = useSchemes({ category });
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
   const [stateFilter, setStateFilter] = useState('all');
-  const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const { data } = await supabase.from('schemes').select('*').eq('category', category!).order('created_at', { ascending: false });
-      setSchemes(data ?? []);
-      setLoading(false);
-      setVisibleCount(PAGE_SIZE);
-    };
-    fetchData();
-  }, [category]);
 
   const states = Array.from(new Set(schemes.map(s => s.state).filter(Boolean)));
 
