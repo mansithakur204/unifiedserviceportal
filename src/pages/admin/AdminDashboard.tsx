@@ -3,13 +3,17 @@ import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Sprout, GraduationCap, Heart, FileText, Languages, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Sprout, GraduationCap, Heart, FileText, Languages, Loader2, Sheet, Check, X } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { getGoogleSheetUrl, setGoogleSheetUrl } from '@/hooks/useSchemes';
 
 export default function AdminDashboard() {
   const { t } = useLanguage();
   const [stats, setStats] = useState({ total: 0, farmers: 0, students: 0, women: 0, translated: 0, untranslated: 0 });
   const [translating, setTranslating] = useState(false);
+  const [sheetUrl, setSheetUrlState] = useState(getGoogleSheetUrl());
+  const [testingSheet, setTestingSheet] = useState(false);
 
   const fetchStats = async () => {
     const { data } = await supabase.from('schemes').select('category, scheme_name_hi');
@@ -40,6 +44,27 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleSaveSheetUrl = () => {
+    setGoogleSheetUrl(sheetUrl);
+    toast({ title: sheetUrl ? 'Google Sheet URL saved' : 'Google Sheet URL removed' });
+  };
+
+  const handleTestSheet = async () => {
+    if (!sheetUrl) return;
+    setTestingSheet(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('fetch-google-sheet', {
+        body: { sheetUrl },
+      });
+      if (error) throw error;
+      toast({ title: `Sheet connected! ${data.schemes?.length ?? 0} schemes found.` });
+    } catch (err: any) {
+      toast({ title: 'Failed to fetch sheet', description: err.message, variant: 'destructive' });
+    } finally {
+      setTestingSheet(false);
+    }
+  };
+
   const cards = [
     { label: t('admin.totalSchemes'), value: stats.total, icon: FileText, color: 'gradient-saffron' },
     { label: t('category.farmers'), value: stats.farmers, icon: Sprout, color: 'gradient-green' },
@@ -63,6 +88,43 @@ export default function AdminDashboard() {
           </Card>
         ))}
       </div>
+
+      {/* Google Sheet Integration */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Sheet className="w-5 h-5" />
+            Google Sheets Data Source
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Paste a published Google Sheet URL below. The sheet should have columns: <code className="text-xs bg-muted px-1 py-0.5 rounded">name, category, type, state, description, benefits, eligibility, documents, amount, applyLink</code>
+          </p>
+          <div className="flex gap-2">
+            <Input
+              placeholder="https://docs.google.com/spreadsheets/d/..."
+              value={sheetUrl}
+              onChange={e => setSheetUrlState(e.target.value)}
+              className="flex-1"
+            />
+            <Button onClick={handleSaveSheetUrl} variant="default" className="gap-1">
+              <Check className="w-4 h-4" /> Save
+            </Button>
+            {sheetUrl && (
+              <Button onClick={() => { setSheetUrlState(''); setGoogleSheetUrl(''); toast({ title: 'Sheet URL removed' }); }} variant="outline" className="gap-1">
+                <X className="w-4 h-4" /> Clear
+              </Button>
+            )}
+          </div>
+          {sheetUrl && (
+            <Button onClick={handleTestSheet} disabled={testingSheet} variant="outline" className="gap-2">
+              {testingSheet ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sheet className="w-4 h-4" />}
+              Test Connection
+            </Button>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Translation Status */}
       <Card>

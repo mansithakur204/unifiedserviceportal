@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSchemes } from '@/hooks/useSchemes';
 import CategoryCards from '@/components/CategoryCard';
 import SchemeCard from '@/components/SchemeCard';
 import { Input } from '@/components/ui/input';
@@ -12,19 +12,9 @@ const PAGE_SIZE = 12;
 
 export default function Home() {
   const { t } = useLanguage();
-  const [schemes, setSchemes] = useState<any[]>([]);
+  const { schemes, loading } = useSchemes();
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-
-  useEffect(() => {
-    const fetchSchemes = async () => {
-      const { data } = await supabase.from('schemes').select('*').order('created_at', { ascending: false });
-      setSchemes(data ?? []);
-      setLoading(false);
-    };
-    fetchSchemes();
-  }, []);
 
   const filtered = schemes.filter(s =>
     s.scheme_name.toLowerCase().includes(search.toLowerCase()) ||

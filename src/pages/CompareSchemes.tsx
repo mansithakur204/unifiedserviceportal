@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSchemes } from '@/hooks/useSchemes';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,13 +9,9 @@ import { localizeScheme } from '@/lib/localize';
 
 export default function CompareSchemes() {
   const { t, td, lang } = useLanguage();
-  const [schemes, setSchemes] = useState<any[]>([]);
+  const { schemes } = useSchemes({ orderBy: 'scheme_name' });
   const [schemeA, setSchemeA] = useState('');
   const [schemeB, setSchemeB] = useState('');
-
-  useEffect(() => {
-    supabase.from('schemes').select('*').order('scheme_name').then(({ data }) => setSchemes(data ?? []));
-  }, []);
 
   const a = schemes.find(s => s.id === schemeA);
   const b = schemes.find(s => s.id === schemeB);
