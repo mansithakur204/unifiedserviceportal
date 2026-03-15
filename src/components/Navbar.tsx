@@ -38,6 +38,9 @@ export default function Navbar() {
           <Link to="/compare" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
             <GitCompareArrows className="w-4 h-4" /> {t('nav.compare')}
           </Link>
+          <Link to="/find-my-schemes" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
+            <Sparkles className="w-4 h-4" /> {t('nav.findMySchemes')}
+          </Link>
           {user && (
             <Link to="/saved" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
               <Bookmark className="w-4 h-4" /> {t('nav.saved')}
