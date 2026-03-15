@@ -22,6 +22,7 @@ import Contact from "@/pages/Contact";
 import Disclaimer from "@/pages/Disclaimer";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import EligibilityChecker from "@/pages/EligibilityChecker";
+import FindMySchemes from "@/pages/FindMySchemes";
 import CompareSchemes from "@/pages/CompareSchemes";
 import SavedSchemes from "@/pages/SavedSchemes";
 import AdminLayout from "@/pages/admin/AdminLayout";
@@ -58,6 +59,7 @@ const App = () => (
                   <Route path="/disclaimer" element={<Disclaimer />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/eligibility" element={<EligibilityChecker />} />
+                  <Route path="/find-my-schemes" element={<FindMySchemes />} />
                   <Route path="/compare" element={<CompareSchemes />} />
                   <Route path="/saved" element={<SavedSchemes />} />
                   <Route path="/admin" element={<AdminLayout />}>

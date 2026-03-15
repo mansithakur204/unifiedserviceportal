@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Globe, LogOut, Menu, Shield, User, X, ClipboardCheck, GitCompareArrows, Bookmark } from 'lucide-react';
+import { Globe, LogOut, Menu, Shield, User, X, ClipboardCheck, GitCompareArrows, Bookmark, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Navbar() {
@@ -37,6 +37,9 @@ export default function Navbar() {
           </Link>
           <Link to="/compare" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
             <GitCompareArrows className="w-4 h-4" /> {t('nav.compare')}
+          </Link>
+          <Link to="/find-my-schemes" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
+            <Sparkles className="w-4 h-4" /> {t('nav.findMySchemes')}
           </Link>
           {user && (
             <Link to="/saved" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
@@ -82,6 +85,7 @@ export default function Navbar() {
           <Link to="/search" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.search')}</Link>
           <Link to="/eligibility" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.eligibilityChecker')}</Link>
           <Link to="/compare" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.compareSchemes')}</Link>
+          <Link to="/find-my-schemes" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.findMySchemes')}</Link>
           {user && <Link to="/saved" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.savedSchemes')}</Link>}
           {isAdmin && (
             <Link to="/admin" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.admin')}</Link>
