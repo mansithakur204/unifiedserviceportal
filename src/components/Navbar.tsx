@@ -85,6 +85,7 @@ export default function Navbar() {
           <Link to="/search" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.search')}</Link>
           <Link to="/eligibility" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.eligibilityChecker')}</Link>
           <Link to="/compare" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.compareSchemes')}</Link>
+          <Link to="/find-my-schemes" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.findMySchemes')}</Link>
           {user && <Link to="/saved" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.savedSchemes')}</Link>}
           {isAdmin && (
             <Link to="/admin" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.admin')}</Link>

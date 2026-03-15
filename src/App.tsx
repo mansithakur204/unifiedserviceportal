@@ -59,6 +59,7 @@ const App = () => (
                   <Route path="/disclaimer" element={<Disclaimer />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/eligibility" element={<EligibilityChecker />} />
+                  <Route path="/find-my-schemes" element={<FindMySchemes />} />
                   <Route path="/compare" element={<CompareSchemes />} />
                   <Route path="/saved" element={<SavedSchemes />} />
                   <Route path="/admin" element={<AdminLayout />}>
