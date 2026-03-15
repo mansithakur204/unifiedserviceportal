@@ -16,6 +16,7 @@ const translations: Record<string, Record<Language, string>> = {
   'nav.eligibilityChecker': { en: 'Eligibility Checker', hi: 'पात्रता जाँचकर्ता' },
   'nav.compareSchemes': { en: 'Compare Schemes', hi: 'योजनाओं की तुलना' },
   'nav.savedSchemes': { en: 'Saved Schemes', hi: 'सहेजी गई योजनाएं' },
+  'nav.findMySchemes': { en: 'Find My Schemes', hi: 'मेरी योजनाएं खोजें' },
 
   // Landing
   'landing.title': { en: 'Rural Services Portal', hi: 'ग्रामीण सेवा पोर्टल' },
