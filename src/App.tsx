@@ -22,6 +22,7 @@ import Contact from "@/pages/Contact";
 import Disclaimer from "@/pages/Disclaimer";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import EligibilityChecker from "@/pages/EligibilityChecker";
+import FindMySchemes from "@/pages/FindMySchemes";
 import CompareSchemes from "@/pages/CompareSchemes";
 import SavedSchemes from "@/pages/SavedSchemes";
 import AdminLayout from "@/pages/admin/AdminLayout";
