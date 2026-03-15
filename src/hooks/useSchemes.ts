@@ -29,41 +29,72 @@ export function useSchemes(options?: UseSchemeOptions) {
     let cancelled = false;
     const fetchSchemes = async () => {
       setLoading(true);
-      const sheetUrl = getGoogleSheetUrl();
 
-      // Try Google Sheet first if configured
+      // Always fetch DB schemes
+      let query = supabase.from('schemes').select('*');
+      if (options?.category) {
+        query = query.eq('category', options.category);
+      }
+      query = query.order(options?.orderBy || 'created_at', { ascending: false });
+      const { data: dbSchemes } = await query;
+      const dbList = dbSchemes ?? [];
+
+      const sheetUrl = getGoogleSheetUrl();
       if (sheetUrl) {
         try {
           const { data, error } = await supabase.functions.invoke('fetch-google-sheet', {
             body: { sheetUrl },
           });
           if (!error && data?.schemes?.length > 0) {
-            let result = data.schemes;
+            let sheetSchemes: any[] = data.schemes;
             if (options?.category) {
-              result = result.filter((s: any) => s.category === options.category);
+              sheetSchemes = sheetSchemes.filter((s: any) => s.category === options.category);
             }
+
+            // Build lookup sets from DB for deduplication
+            const existingNames = new Set(
+              dbList.map((s: any) => (s.scheme_name || '').trim().toLowerCase()).filter(Boolean)
+            );
+            const existingLinks = new Set(
+              dbList.map((s: any) => (s.application_link || '').trim().toLowerCase()).filter(Boolean)
+            );
+
+            // Filter out sheet schemes that already exist in DB
+            const newFromSheet = sheetSchemes.filter((s: any) => {
+              const name = (s.scheme_name || '').trim().toLowerCase();
+              const link = (s.application_link || '').trim().toLowerCase();
+              if (name && existingNames.has(name)) return false;
+              if (link && existingLinks.has(link)) return false;
+              return true;
+            });
+
+            // Also deduplicate within sheet data itself
+            const seenNames = new Set<string>();
+            const seenLinks = new Set<string>();
+            const uniqueSheet = newFromSheet.filter((s: any) => {
+              const name = (s.scheme_name || '').trim().toLowerCase();
+              const link = (s.application_link || '').trim().toLowerCase();
+              if (name && seenNames.has(name)) return false;
+              if (link && seenLinks.has(link)) return false;
+              if (name) seenNames.add(name);
+              if (link) seenLinks.add(link);
+              return true;
+            });
+
             if (!cancelled) {
-              setSchemes(result);
-              setSource('google-sheet');
+              setSchemes([...dbList, ...uniqueSheet]);
+              setSource(uniqueSheet.length > 0 ? 'google-sheet' : 'database');
               setLoading(false);
             }
             return;
           }
         } catch {
-          // Fall through to Supabase
+          // Fall through to DB-only
         }
       }
 
-      // Fallback: Supabase
-      let query = supabase.from('schemes').select('*');
-      if (options?.category) {
-        query = query.eq('category', options.category);
-      }
-      query = query.order(options?.orderBy || 'created_at', { ascending: false });
-
-      const { data } = await query;
       if (!cancelled) {
-        setSchemes(data ?? []);
+        setSchemes(dbList);
         setSource('database');
         setLoading(false);
       }
