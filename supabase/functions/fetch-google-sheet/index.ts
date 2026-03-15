@@ -60,15 +60,19 @@ serve(async (req) => {
       });
     }
 
-    // Convert any Google Sheet URL to CSV export
+    // Convert Google Sheet URL to CSV export if needed
     let csvUrl = sheetUrl;
-    const match = sheetUrl.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
-    if (match) {
-      const sheetId = match[1];
-      // Try to extract gid if present
-      const gidMatch = sheetUrl.match(/gid=(\d+)/);
-      const gid = gidMatch ? gidMatch[1] : '0';
-      csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+    // If already a published CSV URL, use as-is
+    if (sheetUrl.includes('/pub') && sheetUrl.includes('output=csv')) {
+      csvUrl = sheetUrl;
+    } else {
+      const match = sheetUrl.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+      if (match) {
+        const sheetId = match[1];
+        const gidMatch = sheetUrl.match(/gid=(\d+)/);
+        const gid = gidMatch ? gidMatch[1] : '0';
+        csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+      }
     }
 
     const response = await fetch(csvUrl);
