@@ -11,7 +11,8 @@ import carouselFarmer from '@/assets/carousel-farmer.jpg';
 import carouselStudents from '@/assets/carousel-students.jpg';
 import carouselWomen from '@/assets/carousel-women.jpg';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Globe, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const SLIDES = [
   { img: heroRural, titleKey: 'landing.title', subtitleKey: 'landing.subtitle' },
