@@ -2,12 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Globe, LogOut, Menu, Shield, User, X, ClipboardCheck, GitCompareArrows, Bookmark, Sparkles } from 'lucide-react';
+import { LogOut, Menu, Shield, User, X, ClipboardCheck, GitCompareArrows, Bookmark, Sparkles } from 'lucide-react';
 import { useState } from 'react';
+import LanguageSelector from '@/components/LanguageSelector';
 
 export default function Navbar() {
   const { user, isAdmin, signOut } = useAuth();
-  const { lang, toggleLang, t } = useLanguage();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -52,10 +53,7 @@ export default function Navbar() {
               {t('nav.admin')}
             </Link>
           )}
-          <Button variant="outline" size="sm" onClick={toggleLang} className="gap-1">
-            <Globe className="w-4 h-4" />
-            {lang === 'en' ? 'हिंदी' : 'English'}
-          </Button>
+          <LanguageSelector />
           {user ? (
             <div className="flex items-center gap-2">
               <Link to="/profile">
@@ -90,10 +88,7 @@ export default function Navbar() {
           {user && isAdmin && (
             <Link to="/admin" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.admin')}</Link>
           )}
-          <Button variant="outline" size="sm" onClick={toggleLang} className="w-full gap-1">
-            <Globe className="w-4 h-4" />
-            {lang === 'en' ? 'हिंदी' : 'English'}
-          </Button>
+          <LanguageSelector className="w-full" />
           {user ? (
             <div className="flex gap-2">
               <Link to="/profile" className="flex-1" onClick={() => setMenuOpen(false)}>

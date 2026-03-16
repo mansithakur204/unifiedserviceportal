@@ -11,7 +11,8 @@ import carouselFarmer from '@/assets/carousel-farmer.jpg';
 import carouselStudents from '@/assets/carousel-students.jpg';
 import carouselWomen from '@/assets/carousel-women.jpg';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Globe, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const SLIDES = [
   { img: heroRural, titleKey: 'landing.title', subtitleKey: 'landing.subtitle' },
@@ -21,7 +22,7 @@ const SLIDES = [
 ];
 
 export default function Landing() {
-  const { t, toggleLang, lang } = useLanguage();
+  const { t, lang } = useLanguage();
   const { user } = useAuth();
   const [latestSchemes, setLatestSchemes] = useState<any[]>([]);
   const [popularSchemes, setPopularSchemes] = useState<any[]>([]);
@@ -74,10 +75,9 @@ export default function Landing() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Button variant="outline" size="sm" onClick={toggleLang} className="mb-4 bg-card/20 border-card/30 text-card gap-1 backdrop-blur-sm">
-                <Globe className="w-4 h-4" />
-                {lang === 'en' ? 'हिंदी में देखें' : 'View in English'}
-              </Button>
+              <div className="mb-4">
+                <LanguageSelector className="bg-card/20 border-card/30 text-card backdrop-blur-sm" />
+              </div>
               <h1 className="text-4xl md:text-6xl font-extrabold text-card leading-tight">
                 {t(slide.titleKey)}
               </h1>

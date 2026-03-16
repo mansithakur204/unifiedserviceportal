@@ -53,7 +53,7 @@ vi.mock('@/contexts/LanguageContext', () => ({
   useLanguage: () => ({
     t: (key: string) => key,
     lang: 'en',
-    toggleLang: vi.fn(),
+    setLang: vi.fn(),
   }),
 }));
 
