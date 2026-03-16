@@ -14,7 +14,7 @@ export default function Footer() {
               <li><Link to="/" className="hover:text-primary transition-colors">{t('footer.home')}</Link></li>
               <li><Link to="/search" className="hover:text-primary transition-colors">{t('footer.searchSchemes')}</Link></li>
               <li><Link to="/home" className="hover:text-primary transition-colors">{t('footer.allSchemes')}</Link></li>
-              <li><Link to="/admin" className="hover:text-primary transition-colors">Admin Dashboard</Link></li>
+              
             </ul>
           </div>
           <div>
