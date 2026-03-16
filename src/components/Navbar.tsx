@@ -46,7 +46,7 @@ export default function Navbar() {
               <Bookmark className="w-4 h-4" /> {t('nav.saved')}
             </Link>
           )}
-          {isAdmin && (
+          {user && isAdmin && (
             <Link to="/admin" className="text-foreground/80 hover:text-primary transition-colors font-medium flex items-center gap-1">
               <Shield className="w-4 h-4" />
               {t('nav.admin')}
