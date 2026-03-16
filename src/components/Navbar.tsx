@@ -53,10 +53,7 @@ export default function Navbar() {
               {t('nav.admin')}
             </Link>
           )}
-          <Button variant="outline" size="sm" onClick={toggleLang} className="gap-1">
-            <Globe className="w-4 h-4" />
-            {lang === 'en' ? 'हिंदी' : 'English'}
-          </Button>
+          <LanguageSelector />
           {user ? (
             <div className="flex items-center gap-2">
               <Link to="/profile">
