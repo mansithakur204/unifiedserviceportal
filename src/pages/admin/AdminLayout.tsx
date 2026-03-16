@@ -14,10 +14,8 @@ export default function AdminLayout() {
   const { t } = useLanguage();
   const location = useLocation();
 
-  const isPreview = window.location.hostname.includes('lovable.app') || window.location.hostname === 'localhost';
-
   if (loading) return <div className="p-8 text-center">{t('common.loading')}</div>;
-  if (!isAdmin && !isPreview) return <Navigate to="/home" />;
+  if (!isAdmin) return <Navigate to="/home" />;
 
   return (
     <div className="flex min-h-[calc(100vh-64px)]">

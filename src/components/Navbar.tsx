@@ -87,7 +87,7 @@ export default function Navbar() {
           <Link to="/compare" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.compareSchemes')}</Link>
           <Link to="/find-my-schemes" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.findMySchemes')}</Link>
           {user && <Link to="/saved" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.savedSchemes')}</Link>}
-          {isAdmin && (
+          {user && isAdmin && (
             <Link to="/admin" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.admin')}</Link>
           )}
           <Button variant="outline" size="sm" onClick={toggleLang} className="w-full gap-1">
