@@ -115,8 +115,8 @@ const translations: Record<string, Record<Language, string>> = {
   'carousel.farmerSubtitle': { en: 'Access subsidies, loans & agricultural support schemes', hi: 'सब्सिडी, ऋण और कृषि सहायता योजनाएं प्राप्त करें' },
   'carousel.studentTitle': { en: 'Bright Futures for Students', hi: 'छात्रों के लिए उज्ज्वल भविष्य' },
   'carousel.studentSubtitle': { en: 'Scholarships, skill development & education support', hi: 'छात्रवृत्ति, कौशल विकास और शिक्षा सहायता' },
-  'carousel.womenTitle': { en: 'Women Empowerment', hi: 'महिला सशक्तिकरण' },
-  'carousel.womenSubtitle': { en: 'Safety, welfare & financial independence schemes', hi: 'सुरक्षा, कल्याण और वित्तीय स्वतंत्रता योजनाएं' },
+  'carousel.womenTitle': { en: 'Empowering Women for a Stronger Future', hi: 'एक मजबूत भविष्य के लिए महिलाओं का सशक्तिकरण' },
+  'carousel.womenSubtitle': { en: 'Explore government schemes supporting women\'s education, safety, financial independence, and entrepreneurship.', hi: 'महिलाओं की शिक्षा, सुरक्षा, वित्तीय स्वतंत्रता और उद्यमिता का समर्थन करने वाली सरकारी योजनाओं का अन्वेषण करें।' },
 
   // Footer
   'footer.portal': { en: 'Portal', hi: 'पोर्टल' },
