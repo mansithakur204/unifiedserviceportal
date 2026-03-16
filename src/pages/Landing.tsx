@@ -21,7 +21,7 @@ const SLIDES = [
 ];
 
 export default function Landing() {
-  const { t, toggleLang, lang } = useLanguage();
+  const { t, lang } = useLanguage();
   const { user } = useAuth();
   const [latestSchemes, setLatestSchemes] = useState<any[]>([]);
   const [popularSchemes, setPopularSchemes] = useState<any[]>([]);
