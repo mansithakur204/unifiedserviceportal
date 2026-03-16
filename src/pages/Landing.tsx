@@ -74,10 +74,9 @@ export default function Landing() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Button variant="outline" size="sm" onClick={toggleLang} className="mb-4 bg-card/20 border-card/30 text-card gap-1 backdrop-blur-sm">
-                <Globe className="w-4 h-4" />
-                {lang === 'en' ? 'हिंदी में देखें' : 'View in English'}
-              </Button>
+              <div className="mb-4">
+                <LanguageSelector className="bg-card/20 border-card/30 text-card backdrop-blur-sm" />
+              </div>
               <h1 className="text-4xl md:text-6xl font-extrabold text-card leading-tight">
                 {t(slide.titleKey)}
               </h1>

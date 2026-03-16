@@ -88,10 +88,7 @@ export default function Navbar() {
           {user && isAdmin && (
             <Link to="/admin" className="block py-2 font-medium" onClick={() => setMenuOpen(false)}>{t('nav.admin')}</Link>
           )}
-          <Button variant="outline" size="sm" onClick={toggleLang} className="w-full gap-1">
-            <Globe className="w-4 h-4" />
-            {lang === 'en' ? 'हिंदी' : 'English'}
-          </Button>
+          <LanguageSelector className="w-full" />
           {user ? (
             <div className="flex gap-2">
               <Link to="/profile" className="flex-1" onClick={() => setMenuOpen(false)}>
