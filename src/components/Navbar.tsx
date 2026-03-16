@@ -2,12 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Globe, LogOut, Menu, Shield, User, X, ClipboardCheck, GitCompareArrows, Bookmark, Sparkles } from 'lucide-react';
+import { LogOut, Menu, Shield, User, X, ClipboardCheck, GitCompareArrows, Bookmark, Sparkles } from 'lucide-react';
 import { useState } from 'react';
+import LanguageSelector from '@/components/LanguageSelector';
 
 export default function Navbar() {
   const { user, isAdmin, signOut } = useAuth();
-  const { lang, toggleLang, t } = useLanguage();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
